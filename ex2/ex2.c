@@ -8,7 +8,16 @@
 
 int main(void)
 {
-    // Your code here 
-    
+    FILE *file = fopen("text.txt", "r+");
+    //char line[150];
+
+    if(file == NULL) {
+        printf("File is not opening!\n");
+    }
+    fputs("Hello World", file);
+    printf("Does this print?\n");
+
+
+    fclose(file);
     return 0;
 }
