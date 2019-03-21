@@ -18,16 +18,10 @@ and `clock_gettime()` should work just fine.
 #define number_iter 1000000
 #define BILLION 1000000000L
 
-int localpid(void) {
-    static int a[9] = { 0 };
-    return a[0];
-}
-
 int main(void)
 {
-    long diff;
+    long diff, montonic_sum = 0;
     struct timespec start, end;
-    long montonic_sum = 0;
 
     for(int i = 0; i < number_iter; i++) {
         clock_gettime(CLOCK_MONOTONIC, &start);
@@ -36,9 +30,7 @@ int main(void)
         diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
         montonic_sum = montonic_sum + diff;
     }
-
-
-    printf("elapsed time = %llu nanoseconds\n", (long long unsigned int) montonic_sum/number_iter);
+    printf("Elapsed time = %ld nanoseconds\n", montonic_sum/number_iter);
 
     return 0;
 
